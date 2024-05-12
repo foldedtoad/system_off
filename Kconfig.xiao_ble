@@ -1,0 +1,15 @@
+# Copyright (c) 2024 Callender Consulting LLC
+# SPDX-License-Identifier: Apache-2.0
+
+menu "SEEED XIAO_BLE Options "
+
+config XIAO_BLE_BUTTON_PIN
+	int "Button GPIO pin number"
+	depends on BOARD_XIAO_BLE
+	range 2 4
+	default 2
+	help
+	  The XIAO BLE board doesn't have a user-button,
+	  so a GPIO pin must be defined: GPIO0_n, n = pin number.
+
+endmenu
