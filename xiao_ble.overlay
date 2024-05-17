@@ -9,6 +9,11 @@
  */
 
 / {
+    chosen {
+        zephyr,console = &uart0;
+        zephyr,shell-uart = &uart0;
+    };
+
     buttons {
         compatible = "gpio-keys";
         button0: button_0 {
@@ -21,4 +26,33 @@
     aliases {
         sw0 = &button0;
     };
+};
+
+&pinctrl {
+    uart0_default: uart0_default {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 1, 11)>;
+        };
+        group2 {
+            psels = <NRF_PSEL(UART_RX, 1, 12)>;
+            bias-pull-up;
+        };
+    };
+
+    uart0_sleep: uart0_sleep {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 1, 11)>,
+                    <NRF_PSEL(UART_RX, 1, 12)>;
+            low-power-enable;
+        };
+    };
+};    
+
+&uart0 {
+    compatible = "nordic,nrf-uarte";
+    status = "okay";
+    current-speed = <115200>;
+    pinctrl-0 = <&uart0_default>;
+    pinctrl-1 = <&uart0_sleep>;
+    pinctrl-names = "default", "sleep";
 };
